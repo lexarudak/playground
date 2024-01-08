@@ -36,3 +36,5 @@ const oldClassToNewAdapter = new OldClassToNewInterfaceAdapter(oldClass)
 clientCode(oldClassToNewAdapter);  //  4
 
 // test AA
+
+// TEST - 1
