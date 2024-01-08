@@ -1,0 +1,17 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "binarySearch.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only ./ts-file.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0"
+  }
+}
