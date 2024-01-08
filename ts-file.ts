@@ -38,3 +38,6 @@ clientCode(oldClassToNewAdapter);  //  4
 // test AA
 
 // TEST - 1
+
+
+// wrong info form BR-2
