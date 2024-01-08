@@ -39,5 +39,11 @@ clientCode(oldClassToNewAdapter);  //  4
 
 // TEST - 1
 
+<<<<<<< HEAD
 
 // wrong info form BR-2
+=======
+// test - 2
+
+//Correct data from test-br
+>>>>>>> 8819b65 (correct data)
