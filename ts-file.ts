@@ -34,3 +34,5 @@ function clientCode(service: NewInterface) {
 const oldClass = new OldClass();
 const oldClassToNewAdapter = new OldClassToNewInterfaceAdapter(oldClass)
 clientCode(oldClassToNewAdapter);  //  4
+
+// test AA
