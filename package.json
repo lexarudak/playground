@@ -4,7 +4,8 @@
   "description": "",
   "main": "binarySearch.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only ./ts-file.ts"
+    "dev": "ts-node-dev --respawn --transpile-only ./script.ts",
+    "watch": "tsc --watch"
   },
   "author": "",
   "license": "ISC",

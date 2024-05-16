@@ -1,0 +1,47 @@
+.conatiner {
+  display: flex;
+  align-items: s;
+  justify-content: space-around;
+  height: 200px;
+  width: 500px;
+  background-color: #792599;
+  border: 2px solid white;
+  border-radius: 23px;
+  flex-direction: column;
+}
+
+.white {
+  border: 2px solid white;
+  color: white;
+}
+
+.not-white {
+  border: 2px solid yellow;
+  color: yellow;
+}
+
+.button {
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.display {
+  background-color: white;
+  width: 300px;
+  height: 150px;
+  color: darkslategray;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+  font-size: larger;
+}
