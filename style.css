@@ -1,6 +1,5 @@
-.conatiner {
+.container {
   display: flex;
-  align-items: s;
   justify-content: space-around;
   height: 400px;
   width: 500px;
@@ -9,7 +8,6 @@
   border-radius: 23px;
   flex-direction: column;
 
-  display: none;
 }
 
 .white {
