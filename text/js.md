@@ -120,23 +120,227 @@ buttons[1].addEventListener("click", fn) // <button class="button not-white">Add
 
 ## New keyword. How it works
 
+new используется с функциями конструкторами. че она делает
+- создает пустой объект и привязыыввает к нему контекст
+- модифицирует этот объект
+- возвразает его
+```js
+function User(name) {
+  // this = {};  (неявно)
+
+  // добавляет свойства к this
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;  (неявно)
+}
+```
+если вернуть что-то из конструктора, то это и вернется, вмеcто this
+можно без скобок юзать, но не надо
+```js
+let user = new User; // <-- без скобок
+// то же, что и
+let user = new User();
+```
+
+
+
 ## == comparison algorithm
+
+- 1 если типы одинаковые, то сравнивается через ===
+- если сравниваются null и undefined то вернется true
+- если сравниваются строки, то приводятся к числам
+- если сравниваются булианы, то приводятся к числам (true в 1, false в 0)
+- если сравнивается объект, то сначала пробуется valueof, если его нет или он не примитив вернул то toString и алгоритм заново
 
 ## Priority of operations with example
 
+есть таблица приоритетов. в ней 18 уровней вот основные из них
+- операции в скобках
+- унарные операции типа (+"1" - приведение  числу или ++i - префиксный инкремент. увеличение i на 1)
+- умножение и деление
+- сложение вычитание
+- сравнение (<, <=, >, >=, ==, !=, ===, !==)
+- логический И &&
+- логический или ||
+- присвоение (=, +=, -=)
+
 ## Have solid understanding of types auto conversion, what is unary, binary, ternary operations.
+
+Приведение типов бывает явным (это ок). Это когда мы намеренно меняем тип. например строку перегоняем в число
+бывает не явным, когда js автоматом приводит тип при определенных операциях например (это не ок)
+```js
+"2" + 2 // "22"
+"2" * 2 // 4
+```
+- унарные операторы, это те которым нужен только один операнд (типа +"1")
+- бинарный - которому нужный 2 операнда (типа 1 + 1)
+- тернарный - три операнда isValid ? "black" : "white"
+
+
 
 ## Type of vs instance of show difference in examples.
 
+typeof - это унарный оператор для определения типа. он вернет строку с типом операнда
+```js
+console.log(typeof 'Hello'); // 'string'
+console.log(typeof 17); // 'number'
+console.log(typeof true); // 'boolean'
+console.log(typeof undefined); // 'undefined'
+console.log(typeof {a: 1}); // 'object'
+console.log(typeof [1, 2, 3]); // 'object'
+console.log(typeof null); // 'object'
+console.log(typeof function() {}); // 'function'
+```
+
+Оператор instanceof позволяет проверить, принадлежит ли объект указанному классу, с учётом наследования.
+т.е. он бежит по цепочке прототипов и сравнивает, равен ли __proto__ прототипу класса
+
+```js
+class Rabbit {}
+let rabbit = new Rabbit();
+
+// это объект класса Rabbit?
+alert( rabbit instanceof Rabbit ); // true
+
+let arr = [1, 2, 3];
+alert( arr instanceof Array ); // true
+alert( arr instanceof Object ); // true
+
+obj.__proto__ === Class.prototype?
+obj.__proto__.__proto__ === Class.prototype?
+obj.__proto__.__proto__.__proto__ === Class.prototype?
+...
+// если какой-то из ответов true - возвратить true
+// если дошли до конца цепочки - false
+```
+
 ## Prototype inheritance, props and cons, be able to realize
+
+```js
+class Valera {
+  constructor(){}
+
+  getValera(){
+    console.log("VALERA");
+  }
+}
+
+const valera1 = new Valera()
+const valera2 = new Valera()
+
+valera1.getValera() // VALERA
+valera2.getValera() // VALERA
+
+valera1.__proto__.getValera() // VALERA
+
+Valera.prototype.getValera() // VALERA
+
+valera1.__proto__ === Valera.prototype // true
+console.log(valera1.toString());
+
+console.log(Valera.__proto__ === Function.prototype); // true
+console.log(Valera.__proto__.__proto__ === Object.prototype); // true
+
+class Sasha extends Valera {
+  constructor(){
+    super()
+  }
+
+  getSasha(){
+    console.log("SASHA");
+  }
+}
+
+const sasha1  = new Sasha()
+sasha1.getSasha() // SASHA
+sasha1.getValera() // VALERA
+```
 
 ## Primitive vs reference types with example. Pass by value vs pass by reference
 
+Прототипное наследование - это форма наследования в JavaScript, где объекты наследуют свойства и методы от других объектов (их прототипов). 
+плюсы 
+- не надо дублировать код. наследуешься просто и можешь юзать все методы
+- можно легко помняь свойство в прототипе и оно измениться у всех потомков
+
+минусы
+- сложность в определении this
+- сложности в определиении что наследовать а что нет
+
 ## What is Promise, why should we use it. Promise vs async await, show similarity in examples
+
+Промисы это способ работы в js с асинхронным кодом. мы должны их использовать для операций тредующих определенное время на выполненеи. например запросы или таймеры
+
+```js
+const promise = new Promise((res, rej) => {
+  setTimeout(() => {
+    res("success")
+  }, 1000)
+})
+
+
+const promise2 = new Promise((res, rej) => {
+  setTimeout(() => {
+    rej("hm")
+  }, 2000)
+})
+
+const b = async () => {
+  const a =  await Promise.allSettled([promise, promise2])
+  console.log(a);
+}
+
+
+b()
+
+promise.then((a) => console.log(a));
+promise2.catch((a) => console.log(a));
+```
 
 ## Fetch api
 
+```js
+const getData = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+  const data = await res.json()
+  console.log({data});
+} 
+
+getData()
+
+const postData = async (dataToSend: object) => {
+
+  const body = JSON.stringify(dataToSend)
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: "POST",
+    headers: {
+       'Content-Type': 'application/json'
+    },
+    body
+  })
+  const data = await res.json()
+  console.log({data});
+} 
+
+postData({name: 1})
+```
+
 ## Basic DOM api: update, create, remove classes, attributes. Navigate through DOM tree. Be able to write recursive function to go throught DOM tree.
+
+классы
+- add добавляет новый класс к элементу.
+- remove удаляет класс из элемента.
+- toggle переключает класс (добавляет, если его нет, и удаляет, если он есть).
+- contains проверяет, содержит ли элемент указанный класс.
+
+атрибуты
+- getAttribute(attrName): возвращает значение заданного атрибута.
+- setAttribute(attrName, value): устанавливает значение заданного атрибута.
+- removeAttribute(attrName): удаляет атрибут.
+- hasAttribute(attrName): проверяет наличие атрибута, возвращает true или false.
+
+навигачий по дому может быть по узлам или по элементам. 
 
 ## How to add events. Capturing / Bubbling. Event delegation pattern. PreventDefault. Stop propagation. Stop propagation immediate.
 

@@ -46,18 +46,23 @@ buttons.forEach(function (btn) {
             });
         }
 });
-var container = document.querySelector(".conatiner");
-container === null || container === void 0 ? void 0 : container.addEventListener("BBclick", function (e) {
-    console.log(e.target);
-});
-// buttons?.addEventListener("click", ({target}) => {
-//   if (target) {
-//     const eventTarget = target as HTMLButtonElement
-//   }
-// })
-// const input = document.querySelector("#input") as HTMLInputElement
-// input?.addEventListener("input", (e) => {
-//    console.log(e.target.value);
-//    console.log(e.target.getAttribute("value"));
-// })
+var domNavigator = function (element) {
+    if (!element) {
+        console.log("END");
+        return;
+    }
+    console.log(element);
+    var children = element.children;
+    if (children.length) {
+        domNavigator(children[0]);
+    }
+    if (element.nextElementSibling) {
+        domNavigator(element.nextElementSibling);
+    }
+    var parent = element.parentElement;
+    console.log("DDD", parent ?  : );
+    domNavigator(parent === null || parent === void 0 ? void 0 : parent.nextElementSibling);
+};
+var display = document.querySelector('.display');
+domNavigator(display);
 //# sourceMappingURL=script.js.map

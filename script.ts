@@ -61,25 +61,27 @@ buttons.forEach((btn) => {
 
 
 
-const container = document.querySelector(".conatiner")
-container?.addEventListener("BBclick", (e) => {
-  console.log(e.target);
-})
-// buttons?.addEventListener("click", ({target}) => {
-//   if (target) {
-//     const eventTarget = target as HTMLButtonElement
-//   }
-// })
+const domNavigator = (element: Element | null | undefined) => {
+  if (!element) {
+    console.log("END");
+    return
+  }
+
+  console.log(element);
+  const children = element.children
+  if (children.length) {
+    domNavigator(children[0])
+  }
+  if (element.nextElementSibling) {
+    domNavigator(element.nextElementSibling)
+  }
+  const parent = element.parentElement
 
 
-// const input = document.querySelector("#input") as HTMLInputElement
-// input?.addEventListener("input", (e) => {
-//    console.log(e.target.value);
-//    console.log(e.target.getAttribute("value"));
+  console.log("DDD", parent?);
+  domNavigator(parent?.nextElementSibling)
 
-// })
+}
 
-
-
-
-
+const display = document.querySelector('.display')
+domNavigator(display)
