@@ -28,6 +28,9 @@ var _a = firstObj.BigFn(), arrow = _a.arrow, fn = _a.fn;
 var nestedArrow = arrow().nestedArrow;
 var buttons = document.querySelectorAll(".button");
 buttons[0].addEventListener("click", nestedArrow);
+buttons[0].addEventListener("ce", function (e) {
+    console.log(e);
+});
 buttons[1].addEventListener("click", fn);
 var blackButtonClick = new CustomEvent("BBclick", {
     bubbles: true,
@@ -46,23 +49,11 @@ buttons.forEach(function (btn) {
             });
         }
 });
-var domNavigator = function (element) {
-    if (!element) {
-        console.log("END");
-        return;
-    }
-    console.log(element);
-    var children = element.children;
-    if (children.length) {
-        domNavigator(children[0]);
-    }
-    if (element.nextElementSibling) {
-        domNavigator(element.nextElementSibling);
-    }
-    var parent = element.parentElement;
-    console.log("DDD", parent ?  : );
-    domNavigator(parent === null || parent === void 0 ? void 0 : parent.nextElementSibling);
-};
-var display = document.querySelector('.display');
-domNavigator(display);
+var customEvent = new CustomEvent("ce", {
+    detail: {
+        name: "Marina"
+    },
+    bubbles: true
+});
+buttons[0].dispatchEvent(customEvent);
 //# sourceMappingURL=script.js.map

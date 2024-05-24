@@ -35,6 +35,9 @@ const {nestedArrow} = arrow()
 
 const buttons = document.querySelectorAll(".button")
 buttons[0].addEventListener("click", nestedArrow)
+buttons[0].addEventListener("ce", (e) => {
+  console.log(e);
+})
 buttons[1].addEventListener("click", fn)
 
 
@@ -61,27 +64,11 @@ buttons.forEach((btn) => {
 
 
 
-const domNavigator = (element: Element | null | undefined) => {
-  if (!element) {
-    console.log("END");
-    return
-  }
+const customEvent = new CustomEvent("ce", {
+  detail: {
+    name: "Marina"
+  },
+  bubbles: true
+})
 
-  console.log(element);
-  const children = element.children
-  if (children.length) {
-    domNavigator(children[0])
-  }
-  if (element.nextElementSibling) {
-    domNavigator(element.nextElementSibling)
-  }
-  const parent = element.parentElement
-
-
-  console.log("DDD", parent?);
-  domNavigator(parent?.nextElementSibling)
-
-}
-
-const display = document.querySelector('.display')
-domNavigator(display)
+buttons[0].dispatchEvent(customEvent)
