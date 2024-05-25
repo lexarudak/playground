@@ -428,13 +428,175 @@ https://www.jsv9000.app/
 
 ## For In vs For Of. What Is Symbol.Iterator. Create custom interator
 
+фор ин проходится по ключам объект. через `obj[key]` можно получить значение объекта. так и по массиву можно, но там ключи это индексы а значения - значения
+
+```js
+const obj: {
+  [key: string]: string | number
+} = {
+  name: "valera",
+  age: 40
+}
+
+for (const key in obj) {
+  console.log(key, obj[key]); //name valera, age 40
+}
+```
+
+фор оф тоже самое, но для обхода только итерируемых объектов, типа массива. но бежит не по ключам а по значениям. те. массив можно обойти а объект обычный - нет
+
+фор офф можно юзать для перебора коллекций полученных из дома. и нод лист (слепок на данный момент) и живую (htmlCollection). в них нет методов массива типа мапа и редъюса
+
+```js
+const arr = ["one", "two"]
+
+
+for (const value of arr) {
+  console.log(value); // one, two
+}
+```
+Symbol.iterator - это символ задающий итератор элемента по умолчанию. объекты с методом Symbol.iterator могут быть перебраны циклом фор оф
+
+могу кастомный итератор с помощью геренатора вот
+```js
+function* generator() {
+  for (let i = this.from; i <= this.to; i++) {
+    yield i
+  }
+}
+
+const itObj = {
+  from: 0,
+  to: 12,
+  [Symbol.iterator]: generator,
+}
+
+for (const val of itObj) {
+  console.log(val);
+}
+```
+или прям самому можно написать с использованием замыкания.
+объект, который возвращает генератор, с методом некс - это и есть итератор. встроенный генератор на самом деле делает тодже саме. вот та фигня с елдом просто вернет объект с методом некст
+```js
+function customGenerator() {
+  let current = this.from
+
+  return ({
+    next: () => {
+      if (current < this.to) {
+        return {
+          done: false, value: current++
+        }
+      }
+      return {done: true}
+    }
+  })
+}
+
+const itObj = {
+  from: 0,
+  to: 2,
+  [Symbol.iterator]: customGenerator,
+}
+```
+
+
+
 ## Interators vs Generators – at least basic knowledge
+
+ну вот выше написал
 
 ## Object descriptors. How for in loop works
 
+```JS
+const valera = {
+  a: 1,
+  b: 2,
+  c: 3, 
+  d: 4,
+}
+
+console.log(Object.getOwnPropertyDescriptors(valera));
+```
+
+![alt text](image-4.png)
+это выдаст все дескрипторы всех пропертей объекта
+ можно вывести конкретного проперти 
+ ```js
+ console.log(Object.getOwnPropertyDescriptor(valera, "a"));
+
+ Object.defineProperty(valera, "a", {
+  writable: false, // нельзя будет переписать
+  configurable: false, // нельзя будет удалить и конфигурировать. defineProperty выдаст ошибку в следуюший раз
+  enumerable: false, // будет пропущено в цикле for in
+  value: false, // просто установит значения поля в фолс))
+})
+
+ ```
+
+ for in проходит по всем enumerable свойствам объекта. сохранение последовательности не гарантируется 
+
 ## Rest operator (…) destruturing object properties
 
+деструктуризация объекта это синтаксис такого плана
+
+```js
+const valera = {
+  a: 1,
+  b: 2,
+  c: {
+    v: 5
+  }
+}
+const {a, b, c: {v}} = valera
+
+console.log(a, b, v);
+
+const valera2 = {
+  a: 1,
+  b: 2,
+  c: 3, 
+  d: 4,
+}
+
+const {a, b, ...rest} = valera2
+
+console.log(rest); // {c: 3, c: 4}
+
+const valera3 = {
+  ...rest
+}
+
+console.log(valera3); // {c: 3, c: 4}
+```
+
 ## Js Errors. Throw, catch, create custom errors.
+
+Встроенные типы ошибок в JavaScript:
+Error: Базовый класс для всех ошибок.
+SyntaxError: Ошибка синтаксиса.
+ReferenceError: Возникает при обращении к несуществующей переменной.
+TypeError: Возникает при попытке выполнить операцию на несовместимых типах данных.
+RangeError: Возникает при выходе значения за допустимый диапазон.
+EvalError: Связан с функцией eval().
+URIError: Возникает при неправильном использовании функций encodeURI(), decodeURI() и т.д.
+
+можем создать свой класс
+
+```js
+class myError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = "WOW!"
+  }
+}
+
+try {
+  throw new myError("AAAAAAAA!")
+} catch (e) {
+  console.log(e.message, e.name); // AAAAAAAAA! WOW!
+}
+```
 
 
 
@@ -442,16 +604,59 @@ https://www.jsv9000.app/
 
 # Optional:
 
-## Immutable types, what it is and how it works under the hood.
+1. **Immutable types, what it is and how it works under the hood.**
 
-## Critical rendering path
+   Неизменяемые типы - это типы данных, которые, однажды созданные, не могут быть изменены. В JavaScript примитивные типы данных, включая строки, числа, boolean, null, undefined и символы, являются неизменяемыми. Когда вы присваиваете новое значение переменной, которая содержит примитивный тип, JavaScript фактически создает новый кусок памяти, где хранится новое значение. Старое значение остается неизменным.
 
-## RAF
+2. **Critical rendering path**
+   
+   Критический путь рендеринга веб-страницы - это последовательность стадий, которые браузер проходит для преобразования HTML, CSS и JavaScript в пиксели на экране. Он включает следующие шаги: синтаксический разбор HTML и CSS, создание дерева DOM и CSSOM, создание дерева рендеринга, расчет макета и отрисовка. Все эти шаги должны быть выполнены как можно быстрее, чтобы ускорить отображение страницы пользователю.
 
-## Function patterns: callback, memo, currying, chaining, IIFE, pipe
+3. **RAF (requestAnimationFrame)**
+   
+   Метод `window.requestAnimationFrame()` говорит браузеру, что вы хотите выполнить анимацию и просите его вызвать определенную функцию перед следующей перерисовкой. Этот метод призван оптимизировать производительность анимации и циклов обновления (например, игровых циклов).
 
-## How to create private property in js class
+4. **Function patterns: callback, memo, currying, chaining, IIFE, pipe**
 
-## Private property using WeakMap pattern
+   - **Callback** - это функция, которая передается в другую функцию в качестве аргумента и выполняется позже.
+  
+   - **Memoization** - это техника оптимизации, которая сохраняет результаты вычислительно сложных функций, чтобы не вычислять их снова в следующий раз.
+  
+   - **Currying** - это процесс преобразования функции с несколькими аргументами в последовательность функций, каждая из которых принимает один аргумент.
+  
+   - **Chaining** - это практика вызова нескольких функций (методов) подряд в одной цепочке.
+  
+   - **IIFE (Immediately Invoked Function Expression)** - это функция, которая вызывается сразу же после объявления.
+  
+   - **Pipe** - это процесс комбинирования функций, так что результат одной функции становится вводом следующей.
 
-## Basics about drag/drop api
+5. **How to create private property in js class**
+   
+   В JavaScript классах до ES6 использовались замыкания для создания приватных свойств. С ES6 вы можете использовать символы или поля класса для создания приватных свойств:
+
+   ```javascript
+   //Поля класса (stage 3 proposal)
+   class MyClass {
+     #privateProp = 'I am private';
+   }
+   ```
+
+6. **Private property using WeakMap pattern**
+   
+   Вы можете использовать `WeakMap` для создания приватных свойств в классе:
+
+   ```javascript
+   let _prop = new WeakMap();
+   class MyClass {
+     constructor(prop) {
+       _prop.set(this, prop);
+     }
+     get prop() {
+       return _prop.get(this);
+     }
+   }
+   ```
+
+7. **Basics about drag/drop API**
+   
+   Drag and drop API в JavaScript позволяет приложениям предоставлять функциональность "перетаскивания", как для переноса и бросания данных в рамках одного приложения, так и для импорта данных из другого приложения. Основные события включают `drag`, `dragend`, `dragenter`, `dragexit`, `dragleave`, `dragover`, `dragstart` и `drop`.

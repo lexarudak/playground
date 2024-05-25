@@ -72,3 +72,19 @@ const customEvent = new CustomEvent("ce", {
 })
 
 buttons[0].dispatchEvent(customEvent)
+
+
+
+
+class myError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = "WOW!"
+  }
+}
+
+try {
+  throw new myError("AAAAAAAA!")
+} catch (e) {
+  console.log(e.message, e.name);
+}
