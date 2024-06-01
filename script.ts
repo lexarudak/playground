@@ -74,3 +74,18 @@ const customEvent = new CustomEvent("ce", {
 buttons[0].dispatchEvent(customEvent)
 
 
+interface Valera {
+  name: string
+}
+
+interface Man {
+  drink: boolean
+}
+
+type Me = Valera & Man
+
+
+const me: Me = {
+  name: "Sam",
+  drink: false
+}
