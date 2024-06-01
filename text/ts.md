@@ -83,6 +83,37 @@ const me: Me = {
 
 
 ##	Special Types: Using any and unknown types. Type never. Give example.
+
+any - переменная может быть чем угодно. как в js
+unknown - прийти может что угодно, но дальше с этим нельзя просто взять и началть работать. надо или просвоить тип какой-то или сделать проверку
+```ts
+const vast: unknown = "name"
+vast.length // "vast" относится к типу unknown.ts(18046)
+
+if (typeof vast === "string") {
+  console.log(vast.length); // а так норм
+}
+```
+never - что-то чего не должно быть. например его может вернуть функция которая никогда не выполнится из-за бесконечного цикла. прикльный кейс:
+```js
+type AdminAction = "CREATE" | "ACTIVATE" | "BLOCK";
+class ActionEngine {
+    doAction(action: AdminAction) {
+        switch (action) {
+            case "CREATE":
+                // логика здесь
+                return "CREATED";
+            case "ACTIVATE":
+                // логика здесь
+                return "ACTIVATED";
+            default:
+                const unknownAction: never = action; // Type '"BLOCK"' is not assignable to type 'never'.ts(2322)
+                throw new Error(`Неизвестный тип действия ${unknownAction}`);
+        }
+    }
+}
+```
+
 ##	What is the Tuple? Use cases.
 ##	Functions in Typescript. What are the differences from ES6 functions
 ##	Working with Enum. Numeric and String Enums.

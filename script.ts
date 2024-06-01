@@ -89,3 +89,9 @@ const me: Me = {
   name: "Sam",
   drink: false
 }
+
+const vast: unknown = "name"
+
+if (vast instanceof String) {
+  console.log("AA", vast.length);
+}
