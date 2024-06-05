@@ -4,6 +4,8 @@
 - **Explain at least one algorithm, how it works and complexity.**
   - Бинарный поиск. O(log n). (метод половинчатого деления). Работает только на отсортированном списке.
 
+  ![alt text](image-6.png)
+
 ## Design Patterns:
 - **GRASP vs GOF patterns, what the difference?**
   - GRASP – это скорее 9 принципов распределения обязанностей между классами и объектами в ООП. 
@@ -42,6 +44,8 @@ Low Coupling (Низкая связность):
   - Увеличение времени на разработку. Иногда могут переусложнить код. Могут быть использованы неправильно. Ограничивают возможность придумать новое уникальное решение.
 - **Choose one design pattern, draw diagram for this pattern, explain how it works.**
   - Адаптер.
+  ![alt text](image-7.png)
+  ![alt text](image-8.png)
 
 ## Semantic Versioning:
 - **Explain what is SemVer.**
